@@ -1,6 +1,6 @@
 ---
-title: "Xiaomi DJT11LM control via MQTT"
-description: "Integrate your Xiaomi DJT11LM via Zigbee2MQTT with whatever smart home infrastructure you are using without the vendor's bridge or gateway."
+title: "Aqara DJT11LM control via MQTT"
+description: "Integrate your Aqara DJT11LM via Zigbee2MQTT with whatever smart home infrastructure you are using without the vendor's bridge or gateway."
 addedAt: 2019-07-22T20:08:17Z
 pageClass: device-page
 ---
@@ -11,15 +11,15 @@ pageClass: device-page
 <!-- Do not use h1 or h2 heading within "## Notes"-Section. -->
 <!-- !!!! -->
 
-# Xiaomi DJT11LM
+# Aqara DJT11LM
 
 |     |     |
 |-----|-----|
 | Model | DJT11LM  |
-| Vendor  | [Xiaomi](/supported-devices/#v=Xiaomi)  |
-| Description | Aqara vibration sensor |
+| Vendor  | [Aqara](/supported-devices/#v=Aqara)  |
+| Description | Vibration sensor |
 | Exposes | battery, device_temperature, vibration, action, strength, sensitivity, angle_x, angle_y, angle_z, x_axis, y_axis, z_axis, voltage, power_outage_count, linkquality |
-| Picture | ![Xiaomi DJT11LM](https://www.zigbee2mqtt.io/images/devices/DJT11LM.jpg) |
+| Picture | ![Aqara DJT11LM](https://www.zigbee2mqtt.io/images/devices/DJT11LM.jpg) |
 
 
 <!-- Notes BEGIN: You can edit here. Add "## Notes" headline if not already present. -->
@@ -37,6 +37,10 @@ Then press the button again every 2 seconds to keep it awake (maximum 20 times).
 ### Meaning of `strength` value
 The `strength` value, which is reported every 300 seconds after vibration is detected, is the max strength measured during a period of 300 second.
 
+### Frequency of `vibration` actions
+The subtopic `/action` with payload `vibration` and associated status JSON blobs are emitted about one second after onset, but not more frequently than once per minute regardless of whether vibrations are continuous or intermittent within that minute.  This action message is distinct from the status JSON blob message emitted approximately every hour and after `vibration_timeout` described below.
+
+If vibrations should persist, another `vibration` action will be emitted after that minute interval expires.  There is no evident way of changing the duration of this hold-off period.
 
 ### Troubleshooting: device stops sending messages/disconnects from network
 Since Xiaomi devices do not fully comply to the Zigbee standard, it sometimes happens that they disconnect from the network.
@@ -88,7 +92,7 @@ Remember that the device sends accelerometer values a few seconds after the actu
 ## Exposes
 
 ### Battery (numeric)
-Remaining battery in %, can take up to 24 hours before reported..
+Remaining battery in %, can take up to 24 hours before reported.
 Value can be found in the published state on the `battery` property.
 It's not possible to read (`/get`) or write (`/set`) this value.
 The minimal value is `0` and the maximum value is `100`.
